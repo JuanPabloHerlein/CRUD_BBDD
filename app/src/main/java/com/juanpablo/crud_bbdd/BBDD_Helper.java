@@ -16,7 +16,6 @@ public class BBDD_Helper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-       // db.execSQL(Estructura_BBDD.SQL_DELETE_ENTRIES);
         db.execSQL(Estructura_BBDD.SQL_CREATE_ENTRIES);
     }
 
