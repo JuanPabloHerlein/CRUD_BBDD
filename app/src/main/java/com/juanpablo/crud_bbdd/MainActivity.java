@@ -48,17 +48,55 @@ public class MainActivity extends AppCompatActivity {
                         newRowId, Toast.LENGTH_LONG).show();
 
 
+                textoId.setText("");
+                textoNombre.setText("");
+                textoApellido.setText("");
+
+
             }
         });
         botonActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                SQLiteDatabase db=helper.getReadableDatabase();
+                ContentValues values = new ContentValues();
+                values.put(Estructura_BBDD.NOMBRE_COLUMNA2, textoNombre.getText().toString());
+                values.put(Estructura_BBDD.NOMBRE_COLUMNA3, textoApellido.getText().toString());
+                String selection = Estructura_BBDD.NOMBRE_COLUMNA1 + " LIKE ?";
+                String [] selectionArgs = { textoId.getText().toString() };
+
+                int count = db.update(
+                        Estructura_BBDD.TABLE_NAME,
+                        values,
+                        selection,
+                        selectionArgs);
+
+                Toast.makeText(getApplicationContext(), "Se actualizo el registro con clave", Toast.LENGTH_LONG).show();
+
+                textoId.setText("");
+                textoNombre.setText("");
+                textoApellido.setText("");
+
+
+
             }
         });
         botonBorrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SQLiteDatabase db = helper.getWritableDatabase();
+                String selection = Estructura_BBDD.NOMBRE_COLUMNA1 + " LIKE ?";
+                String [] selectionArgs = { textoId.getText().toString()};
+                db.delete(Estructura_BBDD.TABLE_NAME,selection,selectionArgs);
+
+                Toast.makeText(getApplicationContext(),"Se borro el registro con clave: " +
+                        textoId.getText().toString(),Toast.LENGTH_LONG).show();
+
+                textoId.setText("");
+                textoNombre.setText("");
+                textoApellido.setText("");
 
             }
         });
